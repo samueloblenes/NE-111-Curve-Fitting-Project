@@ -46,7 +46,7 @@ with tab1:
     if "Dataconfirmed" not in st.session_state:
         st.session_state.Dataconfirmed = False # Session state varaible to keep track of if the user has confirmed the entered data
     if "df" not in st.session_state:
-        st.session_state.df = pd.DataFrame(columns=["column 1", "column2"]) # session state variable to store the data being entered
+        st.session_state.df = pd.DataFrame(columns=["X-Axis", "Y-Axis"]) # session state variable to store the data being entered
 
     col3, col4 = st.columns(2)
 
