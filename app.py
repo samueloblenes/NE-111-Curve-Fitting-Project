@@ -8,5 +8,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"  # optional
 )
 
-st.title("📊 Curve Fitting Web App")
+page_title = "📊 Curve Fitting Web App"
+st.title(page_title)
+st.divider
 
