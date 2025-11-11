@@ -92,4 +92,5 @@ with tab2:
 
 # Tab3 Settings
 with tab3:
+    pass
 
