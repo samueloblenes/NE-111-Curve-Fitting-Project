@@ -43,7 +43,7 @@ tab1, tab2, tab3 = st.tabs(["Auto Fit", "Manual Fit", "Settings"])
 ########## Tab1, Auto curve fitting ##########
 with tab1:
     #Initializing variable
-    if "Dataconfirmed" not in st.sessions_state:
+    if "Dataconfirmed" not in st.session_state:
         st.session_state.Dataconfirmed = False # Session state varaible to keep track of if the user has confirmed the entered data
     if "df" not in st.session_state:
         st.session_state.df = pd.DataFrame(columns=["column 1", "column2"]) # session state variable to store the data being entered
@@ -52,12 +52,12 @@ with tab1:
 
 # Data entry section
     with col3:
-        entry_method = st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file")):
+        entry_method = st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file"))
 
         # Manual entry mode
         if  entry_method == "Manual entry":
             st.session_state.df = pd.DataFrame(columns=["column 1", "column2"]) # create the data frame as a sesion state variable do it remains constant
-            edited_df = st.data_editor(df, num_rows="dynamic") # make the data frame editable 
+            edited_df = st.data_editor(st.session_state.df, num_rows="dynamic") # make the data frame editable 
 
             # Show mesages based on confirmation
             if not st.session_state.Dataconfirmed:
@@ -72,7 +72,7 @@ with tab1:
                 if st.button("Confirm") and not st.session_state.df.empty:
                     st.session_state.df = edited_df # updated pandas dataframe to contain the entered data
                     st.session_state.Dataconfirmed = True
-                else:
+                elif st.button("Confirm") and st.session_state.df.empty:
                     # create an html text box to display an error message 
                     st.markdown(""" <style>.error-box {
                                 background-color: #FF746C;
@@ -104,11 +104,12 @@ with tab1:
         col2.subheader("Distribution")
 
         with col1:
-            st.dataframe(df)
+            st.dataframe(st.session_state.df)
 
         with col2:
-            df.plot()
-            plt.show()
+            fig, ax = plt.subplots()
+            st.session_state.df.plot(ax=ax)
+            st.pyplot(fig)
 
     else: 
         st.write("Enter and confirm your data to view the graph") # if data is not confirmed, display this message
