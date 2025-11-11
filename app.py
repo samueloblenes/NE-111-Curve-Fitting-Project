@@ -88,7 +88,7 @@ with tab1:
         
         st.divider()
         # Graph appearance configuration
-        st.subsheading("Configure graph appearacne")
+        st.subheading("Configure graph appearacne")
             
 # Graph display section
     st.divider()
