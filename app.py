@@ -82,7 +82,7 @@ with tab1:
                  if st.button("Clear"):
                     st.session_state.df = pd.DataFrame(columns=edited_df.columns) # Reset pandas dataframe 
                     st.session_state.Dataconfirmed = False # Set confirmation variable to False
-                    st.experimental_rerun()
+                    st.rerun() # imediatly rerun to render the empty input table
             
 # Graph display section
     st.divider()
