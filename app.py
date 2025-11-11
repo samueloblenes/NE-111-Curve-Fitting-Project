@@ -31,7 +31,7 @@ st.markdown(
 )
 
 # Render description text box
-st.markdown(f"<div class='description-box'>{"Select either Auto fit, or manual fit. bellow and enter your data, or a CSV file to begin"}</div>", unsafe_allow_html=True)
+st.markdown(f"<div class='description-box'>{"**Select either Auto fit, or manual fit. bellow and enter your data, or a CSV file to begin**"}</div>", unsafe_allow_html=True)
 
 
 # Create Tabs
