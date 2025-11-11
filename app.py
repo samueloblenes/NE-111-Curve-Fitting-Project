@@ -51,7 +51,7 @@ with tab1:
     with col3:
         if st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file")) == "Manual entry":
             df = pd.DataFrame(columns=["column 1", "column2"]) # create the data frame
-            edited_df = st.data_editor(df, num_rows="dynamic") # make the data frame editable 
+            df = edited_df = st.data_editor(df, num_rows="dynamic") # make the data frame editable 
             
 # Graph display section
     st.divider()
