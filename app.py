@@ -80,7 +80,7 @@ with tab1:
             with col3_2:
                  st.write("Click clear to clear all entered data")
                  if st.button("Clear"):
-                    st.session_state.df = pd.DataFrame(columns=["column 1", "column2"]) # Reset pandas dataframe 
+                    st.session_state.df = pd.DataFrame(columns=edited_df.columns) # Reset pandas dataframe 
                     st.session_state.Dataconfirmed = False # Set confirmation variable to False
             
 # Graph display section
