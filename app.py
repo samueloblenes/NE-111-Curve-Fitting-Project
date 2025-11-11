@@ -36,15 +36,15 @@ st.markdown(
 # Render description text box
 st.markdown(f"<div class='description-box'>{"Select either Auto fit, or manual fit. bellow and enter your data, or a CSV file to begin"}</div>", unsafe_allow_html=True)
 
+#Initializing variable
+Dataconfirmed = False # Varaible to keep track of weather the user has confirmed the entered data
+Confrim_data_message = "Press confrim"
 
 # Create Tabs
 tab1, tab2, tab3 = st.tabs(["Auto Fit", "Manual Fit", "Settings"])
 
 
 ########## Tab1, Auto curve fitting ##########
-Dataconfirmed = False # Varaible to keep track of weather the user has confirmed the entered data
-Confrim_data_message = "Press confrim"
-
 with tab1:
     st.header("Auto Curve Fitting")
 
@@ -56,6 +56,8 @@ with tab1:
             df = pd.DataFrame(columns=["column 1", "column2"]) # create the data frame
             df = edited_df = st.data_editor(df, num_rows="dynamic") # make the data frame editable 
 
+        st.write(confirm_data_message)
+        
         col3_1, col3_2 = st.columns(2)
 
         with col3_1:
