@@ -43,6 +43,9 @@ with tab1:
     st.header("Auto Curve Fitting")
 
     col3, col4 = st.columns(2)
+
+    with col3:
+        st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file"))
     
     st.divider()
     col1, col2 = st.columns([1,3])
