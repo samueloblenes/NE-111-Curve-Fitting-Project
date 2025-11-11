@@ -10,7 +10,6 @@ st.set_page_config(
 
 page_title = "📊 Curve Fitting Web App"
 st.title(page_title)
-st.divider()
 
 # Create Tabs and Columns
 tab1, tab2, tab3 = st.tabs(["Auto Fit", "Manual Fit", "Settings"])
