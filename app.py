@@ -81,12 +81,6 @@ with tab1:
                  if st.button("Clear"):
                     st.session_state.df = pd.DataFrame(columns=edited_df.columns) # Reset pandas dataframe 
                     st.session_state.Dataconfirmed = False # Set confirmation variable to False
-
-                    for key in list(st.session_state.keys()): # delete the data_editor table so that it can be reset without any values in it
-                        if key.startswith("data_editor"):
-                            del st.session_state[key]
- 
-                    st.rerun() # imediatly rerun to render the empty input table
             
 # Graph display section
     st.divider()
