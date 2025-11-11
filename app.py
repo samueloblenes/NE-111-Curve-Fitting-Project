@@ -20,7 +20,7 @@ st.markdown(
             padding: 1.2em;
             border-radius: 10px;
             border-left: 6px solid #4ECDC4;
-            font-size: 1.05em;
+            font-size: 1.1em;
             line-height: 1.6em;
             color: #333;
             box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
@@ -31,7 +31,7 @@ st.markdown(
 )
 
 # Render description text box
-st.markdown(f"<div class='description-box'>{"test test test"}</div>", unsafe_allow_html=True)
+st.markdown(f"<div class='description-box'>{"Select either Auto fit, or manual fit. bellow and enter your data, or a CSV file to begin"}</div>", unsafe_allow_html=True)
 
 
 # Create Tabs
