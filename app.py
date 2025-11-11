@@ -48,12 +48,11 @@ with tab1:
     if "df" not in st.session_state:
         st.session_state.df = pd.DataFrame(columns=["X-Axis", "Y-Axis"]) # session state variable to store the data being entered
 
-    
-
-# Data entry section
     col3, col4 = st.columns(2)
     
+    # Data entry section
     with col3:
+        st.subheading("Enter your data")
         entry_method = st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file"))
 
         # Manual entry mode
@@ -81,6 +80,12 @@ with tab1:
                  if st.button("Clear"):
                     st.session_state.df = pd.DataFrame(columns=edited_df.columns) # Reset pandas dataframe 
                     st.session_state.Dataconfirmed = False # Set confirmation variable to False
+                     
+    # configure curve fitting and graph apearance
+    with col4
+        st.subheading("Configure curve fitting")
+        st.divider()
+        st.subsheading("Configure graph appearacne")
             
 # Graph display section
     st.divider()
