@@ -42,15 +42,17 @@ tab1, tab2, tab3 = st.tabs(["Auto Fit", "Manual Fit", "Settings"])
 
 ########## Tab1, Auto curve fitting ##########
 with tab1:
-    #Initializing variable
+    #Initializing variables
     if "Dataconfirmed" not in st.session_state:
         st.session_state.Dataconfirmed = False # Session state varaible to keep track of if the user has confirmed the entered data
     if "df" not in st.session_state:
         st.session_state.df = pd.DataFrame(columns=["X-Axis", "Y-Axis"]) # session state variable to store the data being entered
 
-    col3, col4 = st.columns(2)
+    
 
 # Data entry section
+    col3, col4 = st.columns(2)
+    
     with col3:
         entry_method = st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file"))
 
@@ -59,13 +61,10 @@ with tab1:
             st.session_state.df = pd.DataFrame(columns=["X-Axis", "Y-Axis"]) # create the data frame as a sesion state variable do it remains constant
             edited_df = st.data_editor(st.session_state.df, num_rows="dynamic") # make the data frame editable 
 
-            # Show mesages based on confirmation
-            st.write("Click confirm to update the graph, Click clear to clear all entered data")
-
+            # Confirm entered data, if there is no data entered, display an error and ask the user to input data
             col3_1, col3_2 = st.columns(2)
-
-            # Confirm entered data, if there is no data entered, display an error and ask the user to input data 
             with col3_1:
+                st.write("Click confirm to update the graph")
                 confirm_clicked = st.button("Confirm")
                 if confirm_clicked:
                     # Remove rows where ALL cells are None, to check if there are actually any numerical values, not just a bunch of aded empty rows
@@ -79,6 +78,7 @@ with tab1:
                     
             # Clear entered data
             with col3_2:
+                 st.write("Click clear to clear all entered data")
                  if st.button("Clear"):
                     st.session_state.df = pd.DataFrame(columns=["column 1", "column2"]) # Reset pandas dataframe 
                     st.session_state.Dataconfirmed = False # Set confirmation variable to False
