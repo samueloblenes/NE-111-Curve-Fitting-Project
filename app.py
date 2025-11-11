@@ -82,9 +82,12 @@ with tab1:
                     st.session_state.Dataconfirmed = False # Set confirmation variable to False
                      
     # configure curve fitting and graph apearance
-    with col4
+    with col4:
+        # Curve fitting configuration
         st.subheading("Configure curve fitting")
+        
         st.divider()
+        # Graph appearance configuration
         st.subsheading("Configure graph appearacne")
             
 # Graph display section
