@@ -67,7 +67,7 @@ with tab1:
             
 # Graph display section
 
-    if Dataconfirmed = True: # If data is confirmed, display the graph and table
+    if Dataconfirmed == True: # If data is confirmed, display the graph and table
         st.divider()
         col1, col2 = st.columns([1,3])
         col1.subheader("Data")
