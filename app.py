@@ -59,6 +59,9 @@ with tab1:
     col1.subheader("Data")
     col2.subheader("Distribution")
 
+    with col1:
+        st.dataframe(df)
+
     with col2:
         df.plot()
   
