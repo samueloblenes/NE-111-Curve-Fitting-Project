@@ -86,7 +86,7 @@ with tab1:
                             }</style>""", unsafe_allow_html=True)
                     
                         # Render description text box
-                        st.markdown(f"<div class='error-box'>{"Please enter some data to confirm"}</div>", unsafe_allow_html=True)
+                    st.markdown(f"<div class='error-box'>{"Please enter some data to confirm"}</div>", unsafe_allow_html=True)
                     
 
             # Clear entered data
