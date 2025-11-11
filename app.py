@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 # Page formating
 st.set_page_config(
@@ -16,10 +17,10 @@ st.markdown(
     """
     <style>
         .description-box {
-            background-color: #FFE66D;
+            background-color: #4ECDC4;
             padding: 1.2em;
             border-radius: 10px;
-            border-left: 6px solid #4ECDC4;
+            border-left: 6px solid #FFE66D;
             font-size: 1.1em;
             line-height: 1.6em;
             color: #333;
@@ -44,9 +45,15 @@ with tab1:
 
     col3, col4 = st.columns(2)
 
+# Data entry section
     with col3:
-        st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file"))
-    
+        if st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file")) == "Manual entry":
+            df = pd.DataFrame(columns=["column 1", "column2"]) # create the data frame
+
+            edited_df = st.data_editor(df) # make the data fram editable
+            edited_df = st.data_editor(df, num_rows="dynamic") # allow aditiion of rows
+            
+# Graph display section
     st.divider()
     col1, col2 = st.columns([1,3])
     col1.subheader("Data")
