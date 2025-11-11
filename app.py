@@ -11,6 +11,29 @@ st.set_page_config(
 page_title = "📊 Curve Fitting Web App"
 st.title(page_title)
 
+# create description text box
+st.markdown(
+    """
+    <style>
+        .description-box {
+            background-color: #FFE66D;
+            padding: 1.2em;
+            border-radius: 10px;
+            border-left: 6px solid #6C3BAA;
+            font-size: 1.05em;
+            line-height: 1.6em;
+            color: #333;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Render description text box
+st.markdown(f"<div class='description-box'>{"test test test"}</div>", unsafe_allow_html=True)
+
+
 # Create Tabs
 tab1, tab2, tab3 = st.tabs(["Auto Fit", "Manual Fit", "Settings"])
 
