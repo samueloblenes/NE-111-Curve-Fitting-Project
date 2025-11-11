@@ -108,7 +108,7 @@ with tab1:
                 st.pyplot(fig)
 
     else: 
-        st.write("Enter and confirm your data to view the graph") # if data is not confirmed, display this message
+        st.write("Once you enter and confirm your data a graph will apear here") # if data is not confirmed, display this message
         
 ########## Tab2 Manual curve fitting ##########
 with tab2:    
