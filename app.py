@@ -1,5 +1,8 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
+from scipy.stats import gamma
+import matplotlib.pyplot as plt
 
 # Page formating
 st.set_page_config(
@@ -49,15 +52,16 @@ with tab1:
     with col3:
         if st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file")) == "Manual entry":
             df = pd.DataFrame(columns=["column 1", "column2"]) # create the data frame
-
-            edited_df = st.data_editor(df) # make the data fram editable
-            edited_df = st.data_editor(df, num_rows="dynamic") # allow aditiion of rows
+            edited_df = st.data_editor(df, num_rows="dynamic") # make the data frame editable 
             
 # Graph display section
     st.divider()
     col1, col2 = st.columns([1,3])
     col1.subheader("Data")
     col2.subheader("Distribution")
+
+    with col2:
+        df.plot()
   
 # Tab2 Manual curve fitting
 with tab2:    
