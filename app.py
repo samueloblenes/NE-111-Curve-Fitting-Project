@@ -1,4 +1,4 @@
-
+import streamlit as st
 
 # Page formating
 st.set_page_config(
