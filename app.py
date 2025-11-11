@@ -46,8 +46,6 @@ tab1, tab2, tab3 = st.tabs(["Auto Fit", "Manual Fit", "Settings"])
 
 ########## Tab1, Auto curve fitting ##########
 with tab1:
-    st.header("Auto Curve Fitting")
-
     col3, col4 = st.columns(2)
 
 # Data entry section
@@ -77,13 +75,13 @@ with tab1:
 
         with col2:
             df.plot()
+            plt.show()
 
     else: 
         st.write("Enter and confirm your data to view the graph") # if data is not confirmed, display this message
         
 ########## Tab2 Manual curve fitting ##########
 with tab2:    
-    st.header("Manual Curve Fitting")
     
     col3, col4 = st.columns(2)
 
@@ -94,5 +92,4 @@ with tab2:
 
 # Tab3 Settings
 with tab3:
-    st.header("Settings")
 
