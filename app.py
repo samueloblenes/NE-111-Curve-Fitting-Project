@@ -108,9 +108,16 @@ with tab1:
             st.dataframe(st.session_state.df)
 
         with col2:
-            fig, ax = plt.subplots()
-            st.session_state.df.plot(ax=ax)
-            st.pyplot(fig)
+            df_to_plot = st.session_state.df.copy()
+            for col in df_to_plot.columns:
+                df_to_plot[col] = pd.to_numeric(df_to_plot[col], errors='coerce')
+            df_to_plot = df_to_plot.dropna()
+            if df_to_plot.empty:
+                st.warning("No numeric data available to plot after conversion.")
+            else:
+                fig, ax = plt.subplots()
+                df_to_plot.plot(ax=ax)
+                st.pyplot(fig)
 
     else: 
         st.write("Enter and confirm your data to view the graph") # if data is not confirmed, display this message
