@@ -56,7 +56,7 @@ with tab1:
             df = pd.DataFrame(columns=["column 1", "column2"]) # create the data frame
             df = edited_df = st.data_editor(df, num_rows="dynamic") # make the data frame editable 
 
-        col3_1, col3_2 = st.column(2)
+        col3_1, col3_2 = st.columns(2)
 
         with col3_1:
             if st.button("Confirm"):
