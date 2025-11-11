@@ -52,7 +52,7 @@ with tab1:
     
     # Data entry section
     with col3:
-        st.subheading("Enter your data")
+        st.subheader("Enter your data")
         entry_method = st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file"))
 
         # Manual entry mode
@@ -84,11 +84,11 @@ with tab1:
     # configure curve fitting and graph apearance
     with col4:
         # Curve fitting configuration
-        st.subheading("Configure curve fitting")
+        st.subheader("Configure curve fitting")
         
         st.divider()
         # Graph appearance configuration
-        st.subheading("Configure graph appearacne")
+        st.subheader("Configure graph appearacne")
             
 # Graph display section
     st.divider()
