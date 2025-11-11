@@ -17,23 +17,23 @@ tab1, tab2, tab3 = st.tabs(["Auto Fit", "Manual Fit", "Settings"])
 
 # Tab1, Auto curve fitting
 with tab1:
-    col1, col2 = st.columns([1,3])
-    col3, col4 = st.columns(2)
-    
     st.header("Auto Curve Fitting")
 
+    col3, col4 = st.columns(2)
+    
     st.divider()
+    col1, col2 = st.columns([1,3])
     col1.subheader("Data")
     col2.subheader("Distribution")
   
 # Tab2 Manual curve fitting
-with tab2:
-    col1, col2 = st.columns([1,3])
-    col3, col4 = st.columns(2)
-    
+with tab2:    
     st.header("Manual Curve Fitting")
+    
+    col3, col4 = st.columns(2)
 
     st.divider()
+    col1, col2 = st.columns([1,3])
     col1.subheader("Data")
     col2.subheader("Distribution")
 
