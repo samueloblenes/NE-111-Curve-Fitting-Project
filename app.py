@@ -66,9 +66,8 @@ with tab1:
                 confirm_data_message = "Confirmed"
             
 # Graph display section
-
+    st.divider()
     if Dataconfirmed == True: # If data is confirmed, display the graph and table
-        st.divider()
         col1, col2 = st.columns([1,3])
         col1.subheader("Data")
         col2.subheader("Distribution")
