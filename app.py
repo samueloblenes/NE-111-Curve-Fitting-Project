@@ -112,7 +112,13 @@ with tab1:
     with col4:
         st.text("Configure curve fitting")
         
-        num_points = st.number_input("Curve resolution")
+        num_points = st.number_input(
+            "Curve resolution",
+            value=300,
+            step=1,
+            format="%d"
+        )
+        
         st.text("increasing the curve resolution provides a smoother fitted curve")
         
         dist_name = st.selectbox(
@@ -147,7 +153,7 @@ with tab1:
                 st.error("No numeric data available to plot.") # Error message if no data is enetred and the program proceeds to try and graph
                 
             else:
-                orig_df, fit_df = fit(df_to_plot, dist_name, num_points)
+                orig_df, fit_df = fit(df_to_plot, dist_name, int(num_points))
 
                 fig, ax = plt.subplots()
                 ax.hist(orig_df["Y-Axis"], bins=30, density=True, alpha=0.5, label="Data Histogram") # create histogram of the entered data
