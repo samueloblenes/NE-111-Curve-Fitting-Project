@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # Defining function that accepts a pandas dataframe and a distribution, then returns the fitted dataframe
 
 def fit(df, dist_name, num_points, x_col = "X-Axis", y_col = 'Y-Axis'):
-    x-axis = x = df[x_col].dropna().values # get data from the X-Axis columns, remove None values
+    x-axis = df[x_col].dropna().values # get data from the X-Axis columns, remove None values
     y-axis = df[y_col].dropna().values # get data from the Y-Axis columns, remove None values
 
     distribution = getattr(stats, dist_name) #get the distribution from the name passed to the function
