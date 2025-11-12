@@ -114,7 +114,7 @@ with tab1:
         num_points = st.number_input("Curve resolution")
         st.text("increasing the curve resolution provides a smoother fitted curve")
         
-        dist_name = st.slectbox(
+        dist_name = st.selectbox(
             "Choose a distribution", 
             "norm", "expon", "gamma", "beta", "uniform", 
             "weibull_min", "poisson", "binom", "chi2", "lognorm"
