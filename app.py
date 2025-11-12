@@ -107,6 +107,7 @@ with tab1:
                  if st.button("Clear"):
                     st.session_state.df = pd.DataFrame(columns=edited_df.columns) # Reset pandas dataframe 
                     st.session_state.Dataconfirmed = False # Set confirmation variable to False
+                    st.rerun()
                      
     # configure curve fitting and graph apearance
     with col4:
@@ -156,7 +157,6 @@ with tab1:
                 
             else:
                
-
                 fig, ax = plt.subplots()
                 ax.hist(orig_df["Y-Axis"], bins=30, density=True, alpha=0.5, label="Data Histogram") # create histogram of the entered data
                 ax.plot(fit_df["X-Axis"], fit_df["Y-Axis"], color='red', lw=2, label="Fitted Curve") # Overlay the fitted curve
