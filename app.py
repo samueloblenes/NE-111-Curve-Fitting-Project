@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 # Defining function that accepts a pandas dataframe and a distribution, then returns the fitted dataframe
 
-def fit(df, dist_name, x_col = "X-Axis", y_col = 'Y-Axis', num_points):
+def fit(df, dist_name, num_points, x_col = "X-Axis", y_col = 'Y-Axis'):
     x-axis = x = df[x_col].dropna().values # get data from the X-Axis columns, remove None values
     y-axis = df[y_col].dropna().values # get data from the Y-Axis columns, remove None values
 
@@ -148,8 +148,12 @@ with tab1:
                 
             else:
                 orig_df, fit_df = fit(df_to_plot, dist_name, num_points)
-                fig, ax = plt.subplots()
-                df_to_plot.plot(ax=ax)
+                
+                ax.hist(orig_df["Y-Axis"], bins=30, density=True, alpha=0.5, label="Data Histogram") # create histogram of the entered data
+
+                ax.plot(fit_df["X-Axis"], fit_df["Y-Axis"], color='red', lw=2, label="Fitted Curve") # Overlay the fitted curve
+
+                # Display in Streamlit
                 st.pyplot(fig)
 
     else: 
