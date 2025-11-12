@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy import stats
 
 # Defining function that accepts a pandas dataframe and a distribution, then returns the fitted dataframe
 
@@ -11,9 +12,9 @@ def fit(df, dist_name, num_points, x_col = "X-Axis", y_col = 'Y-Axis'):
 
     distribution = getattr(stats, dist_name) #get the distribution from the name passed to the function
 
-    params = distribution.fit(y) # Fits the distribution to the cureve, Gives estimated paramaters
+    params = distribution.fit(y_axis) # Fits the distribution to the cureve, Gives estimated paramaters
 
-    x_fit = np.linspace(np.min(x), np.max(x), num_points) # create evenly spaces points for the x-axis, num_points controls how many points
+    x_fit = np.linspace(np.min(x_axis), np.max(x_axis), num_points) # create evenly spaces points for the x-axis, num_points controls how many points
 
     #checks whether the given distribution has a pdf method (used for continuous distributions) or a pmf method (used for discrete distributions). 
     #compute the fitted probability values at the points x_fit using the parameters stored in params and the correct method.
@@ -116,8 +117,8 @@ with tab1:
         
         dist_name = st.selectbox(
             "Choose a distribution", 
-            "norm", "expon", "gamma", "beta", "uniform", 
-            "weibull_min", "poisson", "binom", "chi2", "lognorm"
+            ["norm", "expon", "gamma", "beta", "uniform", 
+            "weibull_min", "poisson", "binom", "chi2", "lognorm"]
         )
         
         st.divider()
@@ -148,11 +149,10 @@ with tab1:
                 
             else:
                 orig_df, fit_df = fit(df_to_plot, dist_name, num_points)
-                
+
+                fig, ax = plt.subplots()
                 ax.hist(orig_df["Y-Axis"], bins=30, density=True, alpha=0.5, label="Data Histogram") # create histogram of the entered data
-
                 ax.plot(fit_df["X-Axis"], fit_df["Y-Axis"], color='red', lw=2, label="Fitted Curve") # Overlay the fitted curve
-
                 # Display in Streamlit
                 st.pyplot(fig)
 
