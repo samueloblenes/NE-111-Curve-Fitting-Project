@@ -138,22 +138,25 @@ with tab1:
         col1.subheader("Data")
         col2.subheader("Distribution")
 
-        with col1:
-            st.dataframe(st.session_state.df)
-
-        with col2:
-            # prepare/clean entered date
+        # prepare/clean entered date
             df_to_plot = st.session_state.df.copy() # define the dataframe to plot
             for col in df_to_plot.columns:
                 df_to_plot[col] = pd.to_numeric(df_to_plot[col], errors='coerce')
-            df_to_plot = df_to_plot.dropna()
+                df_to_plot = df_to_plot.dropna()
 
+            orig_df, fit_df = fit(df_to_plot, dist_name, int(num_points))
+
+        with col1:
+            st.dataframe(orig_df)
+            st.dataframe(fit_df)
+
+        with col2:
             # if no numerical data was entered, display and error
             if df_to_plot.empty:
                 st.error("No numeric data available to plot.") # Error message if no data is enetred and the program proceeds to try and graph
                 
             else:
-                orig_df, fit_df = fit(df_to_plot, dist_name, int(num_points))
+               
 
                 fig, ax = plt.subplots()
                 ax.hist(orig_df["Y-Axis"], bins=30, density=True, alpha=0.5, label="Data Histogram") # create histogram of the entered data
