@@ -3,6 +3,33 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Defining function that accepts a pandas dataframe and a distribution, then returns the fitted dataframe
+
+def fit(df, dist-name, x_col = "X-Axis", y_col = 'Y-Axis', num_points):
+    x-axis = x = df[x_col].dropna().values # get data from the X-Axis columns, remove None values
+    y-axis = df[y_col].dropna().values # get data from the Y-Axis columns, remove None values
+
+    distribution = getattr(stats, dist_name) #get the distribution from the name passed to the function
+
+    params = distribution.fit(y) # Fits the distribution to the cureve, Gives estimated paramaters
+
+    x-fit = np.linspace(np.min(x), np.max(x), num_points) # create evenly spaces points for the x-axis, num_points controls how many points
+
+    #checks whether the given distribution has a pdf method (used for continuous distributions) or a pmf method (used for discrete distributions). 
+    #compute the fitted probability values at the points x_fit using the parameters stored in params and the correct method.
+    if hasattr(distribution, 'pdf'):
+        y_fit = distribution.pdf(x_fit, *params)
+    elif hasattr(distribution, 'pmf'):
+        y_fit = distribution.pmf(x_fit, *params)
+
+    #store fited date in a pandas dataframe
+    fit_df = pd.DataFrame({x_col: x_fit, y_col: y_fit}) # fit data
+    orig_df = df.copy() # Entered data
+
+    return orig_df, fit_df
+    
+
+
 # Page formating
 st.set_page_config(
     page_title="NE 111 Project",
@@ -82,6 +109,7 @@ with tab1:
                      
     # configure curve fitting and graph apearance
     with col4:
+        st.text("Configure curve fitting")
         st.divider()
       
             
