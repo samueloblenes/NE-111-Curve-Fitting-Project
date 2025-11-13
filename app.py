@@ -131,7 +131,6 @@ with col2:
      if st.button("Clear"):
         st.session_state.df = pd.DataFrame(columns=["X-Axis", "Y-Axis"]) # Reset pandas dataframe 
         st.session_state.Dataconfirmed = False # Set confirmation variable to False
-        st.session_state["auto_uploader"] = None # clear uplaoded file
         st.rerun() # force streamlit to rerun so that the input table is cleared imediatly
 
 st.session_state.dist_name = st.selectbox(
