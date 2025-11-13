@@ -54,9 +54,6 @@ def data_entry(entry_method, unique_prefix):
             else:
                 st.error("Uploaded CSV has more than 2 columns, please enter a file containing only 2 columns for x and y data respectively")
 
-            st.write("Uploaded Data:")
-            st.dataframe(input_df)
-
     return input_df
 
 # Page formating
