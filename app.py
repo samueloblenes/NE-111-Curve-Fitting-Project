@@ -68,10 +68,10 @@ st.markdown(f"<div class='description-box'>{"Select either Auto fit, or manual f
 tab1, tab2= st.tabs(["Auto Fit", "Manual Fit"])
 
 #Initializing variables
-    if "Dataconfirmed" not in st.session_state:
-        st.session_state.Dataconfirmed = False # Session state varaible to keep track of if the user has confirmed the entered data
-    if "df" not in st.session_state:
-        st.session_state.df = pd.DataFrame(columns=["X-Axis", "Y-Axis"]) # session state variable to store the data being entered
+if "Dataconfirmed" not in st.session_state:
+    st.session_state.Dataconfirmed = False # Session state varaible to keep track of if the user has confirmed the entered data
+if "df" not in st.session_state:
+    st.session_state.df = pd.DataFrame(columns=["X-Axis", "Y-Axis"]) # session state variable to store the data being entered
 
 
 ########## Tab1 Auto curve fitting ##########
