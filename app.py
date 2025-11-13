@@ -140,27 +140,20 @@ st.session_state.dist_name = st.selectbox(
 
 ########## Tab1 Auto curve fitting ##########
 with tab1:    
-    st.texxt("Auto curv fitting. create default paramters and make so that if this tab is selected fitting is done with the default paramater, include some plot appearance customization")
+    st.text("Auto curv fitting. create default paramters and make so that if this tab is selected fitting is done with the default paramater, include some plot appearance customization")
              
 ########## Tab2, Manual curve fitting ##########
 with tab2:
-    col3, col4 = st.columns(2)
+    st.text("Configure curve fitting for manual mode, have sliders and option for every posible fitting paramater")
     
-    # Data entry section
-    with col3:
-        
-    # configure curve fitting and graph apearance
-    with col4:
-        st.text("Configure curve fitting")
-        
-        st.session_state.num_points = st.number_input(
-            "Curve resolution",
-            value=300,
-            step=1,
-            format="%d"
-        )
-        
-        st.text("increasing the curve resolution provides a smoother fitted curve")
+    st.session_state.num_points = st.number_input(
+        "Curve resolution",
+        value=300,
+        step=1,
+        format="%d"
+    )
+    
+    st.text("increasing the curve resolution provides a smoother fitted curve")
         
 ########## Graph display section ##########
 st.divider()
