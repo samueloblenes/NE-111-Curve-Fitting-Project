@@ -112,6 +112,7 @@ st.session_state.dist_name = st.selectbox(
         "weibull_min", "poisson", "binom", "chi2", "lognorm"]
     )
 
+st.divider()
 st.subheader("Select Auto Fit, or Manual Fit")
 
 # Create Tabs
