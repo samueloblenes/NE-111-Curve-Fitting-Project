@@ -107,8 +107,8 @@ if "num_points" not in st.session_state:
 
 ########## Tab1 Auto curve fitting ##########
 with tab1:    
-     entry_method = st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file"))
-     input_df = data_entry(entry_method, "auto") # call data entry function
+    entry_method = st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file"))
+    input_df = data_entry(entry_method, "auto") # call data entry function
     
     # Confirm entered data, if there is no data entered, display an error and ask the user to input data
     col1, col2 = st.columns(2)
