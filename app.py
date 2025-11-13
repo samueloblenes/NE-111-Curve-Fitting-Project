@@ -107,14 +107,14 @@ if "num_points" not in st.session_state:
 
 ########## Tab1 Auto curve fitting ##########
 with tab1:    
-    entry_method = st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file"),key="auto")
+    entry_method = st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file"),key="auto_entry_method")
     input_df = data_entry(entry_method, "auto") # call data entry function
     
     # Confirm entered data, if there is no data entered, display an error and ask the user to input data
     col1, col2 = st.columns(2)
     with col1:
         st.write("Click confirm to update the graph")
-        confirm_clicked = st.button("Confirm",key="auto")
+        confirm_clicked = st.button("Confirm",key="auto_confirm_button")
         if confirm_clicked:
             # Remove rows where ALL cells are None, to check if there are actually any numerical values, not just a bunch of aded empty rows
             cleaned_df = input_df.dropna() #remove None values from dataframe
@@ -127,7 +127,7 @@ with tab1:
     # Clear entered data
     with col2:
          st.write("Click clear to clear all entered data")
-         if st.button("Clear"):
+         if st.button("Clear",key="auto_clear_button"):
             st.session_state.df = pd.DataFrame(columns=["X-Axis", "Y-Axis"]) # Reset pandas dataframe 
             st.session_state.Dataconfirmed = False # Set confirmation variable to False
             st.rerun() # force streamlit to rerun so that the input table is cleared imediatly
@@ -144,7 +144,7 @@ with tab2:
     
     # Data entry section
     with col3:
-        entry_method = st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file"),key="manual")
+        entry_method = st.selectbox("Choose to enter data manualy or upload a CSV file",("Manual entry","Upload CSV file"),key="manual_entry_method")
         input_df = data_entry(entry_method, "manual") # call data entry function
       
             
@@ -153,7 +153,7 @@ with tab2:
         col3_1, col3_2 = st.columns(2)
         with col3_1:
             st.write("Click confirm to update the graph")
-            confirm_clicked = st.button("Confirm",key="manual")
+            confirm_clicked = st.button("Confirm",key="manual_confirm_button")
             if confirm_clicked:
                 # Remove rows where ALL cells are None, to check if there are actually any numerical values, not just a bunch of aded empty rows
                 cleaned_df = input_df.dropna() #remove None values from dataframe
@@ -166,7 +166,7 @@ with tab2:
         # Clear entered data
         with col3_2:
              st.write("Click clear to clear all entered data")
-             if st.button("Clear"):
+             if st.button("Clear",key="manual_clear_button"):
                 st.session_state.df = pd.DataFrame(columns=["X-Axis", "Y-Axis"]) # Reset pandas dataframe 
                 st.session_state.Dataconfirmed = False # Set confirmation variable to False
                 st.rerun() # force streamlit to rerun so that the input table is cleared imediatly
