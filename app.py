@@ -26,10 +26,10 @@ def fit(df, dist_name, xi = None, xf = None, num_points =  300, x_col = "X-Axis"
 
     params = distribution.fit(y_axis) # Fits the distribution to the cureve, Gives estimated paramaters
 
-    if xi is not None and xf is not None:
+    if xi is None and xf is None:
         x_fit = np.linspace(np.min(x_axis), np.max(x_axis), num_points) # create evenly spaces points for the x-axis, num_points controls how many points
     else:
-        x_fit = np.linspace(np.min(xi), np.max(xf), num_points) # create evenly spaces points for the x-axis, num_points controls how many points
+        x_fit = np.linspace(xi, xf, num_points) # if the user enters domain manually
 
     
     #checks whether the given distribution has a pdf method (used for continuous distributions) or a pmf method (used for discrete distributions). 
