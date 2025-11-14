@@ -18,7 +18,7 @@ from scipy import stats
 
 # Defining function that accepts a pandas dataframe and a distribution, then returns the fitted dataframe
 
-def fit(df, dist_name, xi = None, xf = None, num_points =  300, x_col = "X-Axis", y_col = 'Y-Axis'):
+def fit(df, dist_name, xi = None, xf = None, num_points =  300, x_col = "X-Axis", y_col = 'Y-Axis'): 
     x_axis = df[x_col].dropna().values # get data from the X-Axis columns, remove None values
     y_axis = df[y_col].dropna().values # get data from the Y-Axis columns, remove None values
 
@@ -74,7 +74,7 @@ def data_entry(entry_method, unique_prefix):
 
 # definig function that plots the entered data and the fit data
 
-def plot(data_confirmed, dataframe, dist_name, num_points): 
+def plot(data_confirmed, dataframe, dist_name, num_points  = 300, xi = None, xf = None): 
     if data_confirmed and not dataframe.empty: # If data is confirmed and the dataframe is not empty, display the graph and table
         col1, col2 = st.columns([1,3])
         col1.subheader("Data")
@@ -86,7 +86,7 @@ def plot(data_confirmed, dataframe, dist_name, num_points):
             df_to_plot[col] = pd.to_numeric(df_to_plot[col], errors='coerce')
             df_to_plot = df_to_plot.dropna()
         
-        orig_df, fit_df = fit(df_to_plot, dist_name, int(num_points))
+        orig_df, fit_df = fit(df_to_plot, dist_name, xi = xi, xf = xf num_points = int(num_points)) 
         
         with col1:
             st.write("Entered Data")
