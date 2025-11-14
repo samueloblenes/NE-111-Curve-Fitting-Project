@@ -13,6 +13,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
 
+
+########## Function definitions ##########
+
 # Defining function that accepts a pandas dataframe and a distribution, then returns the fitted dataframe
 
 def fit(df, dist_name, xi = None, xf = None, num_points =  300, x_col = "X-Axis", y_col = 'Y-Axis'):
@@ -69,7 +72,45 @@ def data_entry(entry_method, unique_prefix):
 
     return input_df
 
-# Page formating
+# definig function that plots the entered data and the fit data
+
+def plot(data_confirmed, dataframe, dist_name, num_points): 
+    if data_confirmed and not dataframe.empty: # If data is confirmed and the dataframe is not empty, display the graph and table
+        col1, col2 = st.columns([1,3])
+        col1.subheader("Data")
+        col2.subheader("Distribution")
+    
+        # prepare/clean entered date
+        df_to_plot = dataframe # define the dataframe to plot
+        for col in df_to_plot.columns:
+            df_to_plot[col] = pd.to_numeric(df_to_plot[col], errors='coerce')
+            df_to_plot = df_to_plot.dropna()
+        
+        orig_df, fit_df = fit(df_to_plot, dist_name, int(num_points))
+        
+        with col1:
+            st.write("Entered Data")
+            st.dataframe(orig_df)
+            st.write("Fit data")
+            st.dataframe(fit_df)
+        
+        with col2:
+            # if no numerical data was entered, display and error
+            if df_to_plot.empty:
+                st.error("No numeric data available to plot.") # Error message if no data is enetred and the program proceeds to try and graph
+                
+            else:
+               
+                fig, ax = plt.subplots()
+                ax.hist(orig_df["Y-Axis"], bins=30, density=True, alpha=0.5, label="Data Histogram") # create histogram of the entered data
+                ax.plot(fit_df["X-Axis"], fit_df["Y-Axis"], color='red', lw=2, label="Fitted Curve") # Overlay the fitted curve
+                # Display in Streamlit
+                st.pyplot(fig)
+        
+    else: 
+        st.write("Once you enter and confirm your data a graph will apear here") # if data is not confirmed, display this message
+
+########## Page formating/ setup ##########
 st.set_page_config(
     page_title="NE 111 Project",
     page_icon="📊",
@@ -79,6 +120,8 @@ st.set_page_config(
 
 page_title = "📊 Curve Fitting Web App"
 st.title(page_title)
+
+########## Session state variables ##########
 
 #Initializing session state variables for things that I dont want reset everythime strealit updated
 if "Dataconfirmed" not in st.session_state:
@@ -132,7 +175,9 @@ tab1, tab2= st.tabs(["Auto Fit", "Manual Fit"])
 ########## Tab1 Auto curve fitting ##########
 with tab1:    
     st.text("Auto curv fitting. create default paramters and make so that if this tab is selected fitting is done with the default paramater, include some plot appearance customization")
-             
+
+    st.divider()
+    plot(st.session_state.Dataconfirmed,st.session_state.df, st.session_state.dist_name, st.session_state.num_points) # call plot function to display graph 
 ########## Tab2, Manual curve fitting ##########
 with tab2:
     st.text("Configure curve fitting for manual mode, have sliders and option for every posible fitting paramater")
@@ -145,44 +190,11 @@ with tab2:
     )
     
     st.text("increasing the curve resolution provides a smoother fitted curve")
-        
-########## Graph display section ##########
-st.divider()
 
-if st.session_state.Dataconfirmed and not st.session_state.df.empty: # If data is confirmed and the dataframe is not empty, display the graph and table
-    col1, col2 = st.columns([1,3])
-    col1.subheader("Data")
-    col2.subheader("Distribution")
+     
+    st.divider()
+    plot(st.session_state.Dataconfirmed,st.session_state.df, st.session_state.dist_name, st.session_state.num_points) # call plot function to display graph 
 
-    # prepare/clean entered date
-    df_to_plot = st.session_state.df.copy() # define the dataframe to plot
-    for col in df_to_plot.columns:
-        df_to_plot[col] = pd.to_numeric(df_to_plot[col], errors='coerce')
-        df_to_plot = df_to_plot.dropna()
-    
-    orig_df, fit_df = fit(df_to_plot, st.session_state.dist_name, int(st.session_state.num_points))
-    
-    with col1:
-        st.write("Entered Data")
-        st.dataframe(orig_df)
-        st.write("Fit data")
-        st.dataframe(fit_df)
-    
-    with col2:
-        # if no numerical data was entered, display and error
-        if df_to_plot.empty:
-            st.error("No numeric data available to plot.") # Error message if no data is enetred and the program proceeds to try and graph
-            
-        else:
-           
-            fig, ax = plt.subplots()
-            ax.hist(orig_df["Y-Axis"], bins=30, density=True, alpha=0.5, label="Data Histogram") # create histogram of the entered data
-            ax.plot(fit_df["X-Axis"], fit_df["Y-Axis"], color='red', lw=2, label="Fitted Curve") # Overlay the fitted curve
-            # Display in Streamlit
-            st.pyplot(fig)
-    
-else: 
-    st.write("Once you enter and confirm your data a graph will apear here") # if data is not confirmed, display this message
 
 # Samuel O'Blenes NE 111 Final project
 
