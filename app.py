@@ -113,7 +113,7 @@ st.session_state.dist_name = st.selectbox(
     )
 
 st.divider()
-st.subheader("Select Auto Fit, or Manual Fit")
+st.subheader("Configure graph and fit settings")
 
 # Create Tabs
 tab1, tab2= st.tabs(["Auto Fit", "Manual Fit"])
