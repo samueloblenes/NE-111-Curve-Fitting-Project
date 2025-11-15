@@ -25,25 +25,25 @@ def fit(df, dist_name, xi = None, xf = None, num_points =  300, x_col = "X-Axis"
     distribution = getattr(stats, dist_name) #get the distribution from the name passed to the function
 
 
-    # I tried using the distribution.fit(data) method shown in the course notes but it didint work for discrete distributions, used stats.fit instead, BROKEN NEED TO FIX
+    # I tried using the distribution.fit(data) method shown in the course notes but it didint work for discrete distributions, used stats.fit instead
     fit_result = stats.fit(distribution, y_axis)
     params_dict = fit_result.params #gives the paramaters in the form of a dictionary
     params = tuple(params_dict.values()) #turn paramaters into a tuple
 
 
-    if xi is None and xf is None: # determine  min and max values depending on if the user entered them in manual mode or is in auto mode
+    if xi is None or xf is None: # determine  min and max values depending on if the user entered them in manual mode or is in auto mode
         x_min, x_max = np.min(x_axis), np.max(x_axis)
     else:
         x_min, x_max = xi, xf 
-    x_fit = np.linspace(x_min, x_max, num_points) # create evenly spaces points for the x-axis, num_points controls how many points
     
-
     is_discrete = hasattr(distribution, 'pmf') and not hasattr(distribution, 'pdf') # check weather the distribution is discrete or not 
     if not is_discrete: # if the distribution is continuous
+        x_fit = np.linspace(x_min, x_max, num_points) # create evenly spaced points for the x-axis, num_points controls how many points
         y_fit = distribution.pdf(x_fit, *params) # .pdf method for continuous distribution
 
     if is_discrete: # if the disctributioin is discrete
-        y_fit = distribution.pmf(x_fit, *params)  #.pmg method for discrete distribution
+        x_fit = np.arange(int(x_min), int(x_max) + 1) # create evenly spaced points for the x-axis that are only integers for the discrete distributions, num_points controls how many points, add 1 because arrange is exclusive
+        y_fit = distribution.pmf(x_fit, *params)  #.pmf method for discrete distribution
 
     
     #store fited date in a pandas dataframe
