@@ -185,15 +185,9 @@ with tab2:
         value = (0,25)
     )
     
-    fixed_loc = st.slider(
-        label = "Lock parameter", 
-        value = None
-    )
+    #fixed_loc = 
     
-    fixed_scale = st.slider = (
-        label = "Scale parameter", 
-        value = None
-    )
+    #fixed_scale = 
     
     st.divider()
 
