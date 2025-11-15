@@ -185,9 +185,9 @@ with tab2:
         value = (0,25)
     )
     
-    #fixed_loc = 
+    fixed_loc = None 
     
-    #fixed_scale = 
+    fixed_scale = None
     
     st.divider()
 
