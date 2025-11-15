@@ -158,7 +158,7 @@ with col2:
 st.session_state.dist_name = st.selectbox(
         "Choose a distribution", 
         ["norm", "expon", "gamma", "beta", "uniform", 
-        "bernoulli", "binom", "geom", "hypergeom", "lognorm"]
+        "lognorm", "weibull_min", "chi2", "laplace", "lognorm"]
     )
 
 st.divider()
