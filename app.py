@@ -186,12 +186,12 @@ with tab2:
     )
     
     fixed_loc = st.slider(
-        label = "Lock parameter" 
+        label = "Lock parameter", 
         value = None
     )
     
     fixed_scale = st.slider = (
-        label = "Scale parameter" 
+        label = "Scale parameter", 
         value = None
     )
     
