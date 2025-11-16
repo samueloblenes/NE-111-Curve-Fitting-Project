@@ -162,17 +162,25 @@ st.session_state.dist_name = st.selectbox(
         "lognorm", "weibull_min", "chi2", "laplace", "cauchy"]
     )
 
-latex_formulas = [   
-    r"f(x\,|\,\mu,\sigma^2) = \frac{1}{\sqrt{2\pi \sigma^2}} \exp \left(-\frac{(x-\mu)^2}{2\sigma^2}\right)",  # Normal norm
-    r"f(x\,|\,\lambda) = \lambda e^{-\lambda x} \quad \text{for } x \geq 0",  # expon
-    r"f(x\,|\,\alpha,\beta) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x} \quad \text{for } x \geq 0",  # gamma
-    r"f(x\,|\,\alpha,\beta) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1} (1-x)^{\beta-1}",  # Beta
-    r"f(x\,|\,a,b) = \frac{1}{b-a} \quad \text{for } a \leq x \leq b", #Uniform 
-    r"f(x\,|\,\mu,\sigma) = \frac{1}{x \sigma \sqrt{2\pi}} \exp \left(-\frac{(\ln x - \mu)^2}{2\sigma^2}\right) \quad \text{for } x > 0", # lognorm
-    r"f(x\,|\,k,\lambda) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1} e^{-(x/\lambda)^k} \quad \text{for } x \geq 0", # weibull_min
-    r"f(x\,|\,k) = \frac{1}{2^{k/2} \Gamma(k/2)} x^{k/2-1} e^{-x/2} \quad \text{for } x \geq 0", # chi2
-    r"f(x\,|\,\mu,b) = \frac{1}{2b} \exp \left(-\frac{|x-\mu|}{b}\right)" # laplace
-    r"f(x\,|\,x_0,\gamma) = \frac{1}{\pi \gamma} \left[ 1 + \left( \frac{x - x_0}{\gamma} \right)^2 \right]^{-1}" # Cauchy
+latex_formulas = [
+    # scipy.stats.norm PDF
+    r"f(x\,|\,\mu,\sigma) = \frac{1}{\sqrt{2\pi}\sigma} \exp \left(-\frac{(x-\mu)^2}{2\sigma^2}\right)",
+    # scipy.stats.expon PDF
+    r"f(x\,|\,\lambda) = \lambda e^{-\lambda x} \quad x \geq 0",
+    # scipy.stats.gamma PDF
+    r"f(x\,|\,a,\theta) = \frac{1}{\Gamma(a)\theta^a} x^{a-1} \exp\left(-\frac{x}{\theta}\right) \quad x \geq 0",
+    # scipy.stats.beta PDF
+    r"f(x\,|\,\alpha,\beta) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1} (1-x)^{\beta-1} \quad 0 < x < 1",
+    # scipy.stats.uniform PDF
+    r"f(x\,|\,a,b) = \frac{1}{b-a} \quad a \leq x \leq b",
+    # scipy.stats.lognorm PDF
+    r"f(x\,|\,s) = \frac{1}{x s \sqrt{2\pi}} \exp \left(-\frac{(\ln x)^2}{2s^2}\right) \quad x > 0",
+    # scipy.stats.weibull_min PDF
+    r"f(x\,|\,c) = c x^{c-1} \exp(-x^c) \quad x \geq 0",
+    # scipy.stats.chi2 PDF
+    r"f(x\,|\,k) = \frac{1}{2^{k/2}\Gamma(k/2)} x^{k/2-1} e^{-x/2} \quad x \geq 0",
+    # scipy.stats.laplace PDF
+    r"f(x\,|\,\mu, b) = \frac{1}{2b}\exp\left(-\frac{|x-\mu|}{b}\right)",
 ]
 
 st.latex(latex_formulas[ ["norm", "expon", "gamma", "beta", "uniform", 
