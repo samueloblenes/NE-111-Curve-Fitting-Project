@@ -159,8 +159,25 @@ with col2:
 st.session_state.dist_name = st.selectbox(
         "Choose a distribution", 
         ["norm", "expon", "gamma", "beta", "uniform", 
-        "lognorm", "weibull_min", "chi2", "laplace", "lognorm"]
+        "lognorm", "weibull_min", "chi2", "laplace", "cauchy"]
     )
+
+latex_formulas = [   
+    r"f(x\,|\,\mu,\sigma^2) = \frac{1}{\sqrt{2\pi \sigma^2}} \exp \left(-\frac{(x-\mu)^2}{2\sigma^2}\right)",  # Normal norm
+    r"f(x\,|\,\lambda) = \lambda e^{-\lambda x} \quad \text{for } x \geq 0",  # expon
+    r"f(x\,|\,\alpha,\beta) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x} \quad \text{for } x \geq 0",  # gamma
+    r"f(x\,|\,\alpha,\beta) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1} (1-x)^{\beta-1}",  # Beta
+    r"f(x\,|\,a,b) = \frac{1}{b-a} \quad \text{for } a \leq x \leq b", #Uniform 
+    r"f(x\,|\,\mu,\sigma) = \frac{1}{x \sigma \sqrt{2\pi}} \exp \left(-\frac{(\ln x - \mu)^2}{2\sigma^2}\right) \quad \text{for } x > 0", # lognorm
+    r"f(x\,|\,k,\lambda) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1} e^{-(x/\lambda)^k} \quad \text{for } x \geq 0", # weibull_min
+    r"f(x\,|\,k) = \frac{1}{2^{k/2} \Gamma(k/2)} x^{k/2-1} e^{-x/2} \quad \text{for } x \geq 0", # chi2
+    r"f(x\,|\,\mu,b) = \frac{1}{2b} \exp \left(-\frac{|x-\mu|}{b}\right)" # laplace
+    r"f(x\,|\,x_0,\gamma) = \frac{1}{\pi \gamma} \left[ 1 + \left( \frac{x - x_0}{\gamma} \right)^2 \right]^{-1}" # Cauchy
+]
+
+st.latex(latex_formulas[ ["norm", "expon", "gamma", "beta", "uniform", 
+        "lognorm", "weibull_min", "chi2", "laplace", "cauchy"].index(st.session_state.dist_name)])
+
 
 st.divider()
 st.subheader("Configure graph and fit settings")
