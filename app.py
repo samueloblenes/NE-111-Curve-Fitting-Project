@@ -163,24 +163,26 @@ st.session_state.dist_name = st.selectbox(
     )
 
 latex_formulas = [
-    # scipy.stats.norm PDF
-    r"f(x\,|\,\mu,\sigma) = \frac{1}{\sqrt{2\pi}\sigma} \exp \left(-\frac{(x-\mu)^2}{2\sigma^2}\right)",
-    # scipy.stats.expon PDF
+    # norm: scipy.stats.norm (location=μ, scale=σ)
+    r"f(x\,|\,\mu,\sigma) = \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)",
+    # expon: scipy.stats.expon (loc, scale=1/λ)
     r"f(x\,|\,\lambda) = \lambda e^{-\lambda x} \quad x \geq 0",
-    # scipy.stats.gamma PDF
+    # gamma: scipy.stats.gamma (shape=a, loc, scale=θ)
     r"f(x\,|\,a,\theta) = \frac{1}{\Gamma(a)\theta^a} x^{a-1} \exp\left(-\frac{x}{\theta}\right) \quad x \geq 0",
-    # scipy.stats.beta PDF
-    r"f(x\,|\,\alpha,\beta) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1} (1-x)^{\beta-1} \quad 0 < x < 1",
-    # scipy.stats.uniform PDF
+    # beta: scipy.stats.beta (a=α, b=β, loc, scale)
+    r"f(x\,|\,\alpha,\beta) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1} (1-x)^{\beta-1},\quad 0 < x < 1",
+    # uniform: scipy.stats.uniform (loc=a, scale=b-a)
     r"f(x\,|\,a,b) = \frac{1}{b-a} \quad a \leq x \leq b",
-    # scipy.stats.lognorm PDF
-    r"f(x\,|\,s) = \frac{1}{x s \sqrt{2\pi}} \exp \left(-\frac{(\ln x)^2}{2s^2}\right) \quad x > 0",
-    # scipy.stats.weibull_min PDF
-    r"f(x\,|\,c) = c x^{c-1} \exp(-x^c) \quad x \geq 0",
-    # scipy.stats.chi2 PDF
-    r"f(x\,|\,k) = \frac{1}{2^{k/2}\Gamma(k/2)} x^{k/2-1} e^{-x/2} \quad x \geq 0",
-    # scipy.stats.laplace PDF
-    r"f(x\,|\,\mu, b) = \frac{1}{2b}\exp\left(-\frac{|x-\mu|}{b}\right)",
+    # lognorm: scipy.stats.lognorm (s=σ, loc, scale=exp(μ))
+    r"f(x\,|\,\mu,\sigma) = \frac{1}{x \sigma \sqrt{2\pi }} \exp\left(-\frac{(\ln x - \mu )^2}{2\sigma^2}\right),\quad x>0",
+    # weibull_min: scipy.stats.weibull_min (c=shape, loc, scale)
+    r"f(x\,|\,c) = c x^{c-1} e^{-x^{c}},\quad x \geq 0",
+    # chi2: scipy.stats.chi2 (df=k, loc, scale)
+    r"f(x\,|\,k) = \frac{1}{2^{k/2} \Gamma(k/2)} x^{k/2-1} e^{-x/2},\quad x \geq 0",
+    # laplace: scipy.stats.laplace (loc=μ, scale=b)
+    r"f(x\,|\,\mu, b) = \frac{1}{2b} \exp\left(-\frac{|x-\mu|}{b}\right)",
+    # cauchy: scipy.stats.cauchy (loc=x0, scale=γ)
+    r"f(x\,|\,x_0,\gamma) = \frac{1}{\pi \gamma} \left[ 1 + \left(\frac{x-x_0}{\gamma}\right)^2 \right]^{-1}",
 ]
 
 st.latex(latex_formulas[ ["norm", "expon", "gamma", "beta", "uniform", 
