@@ -105,6 +105,94 @@ def plot(data_confirmed, dataframe, dist_name, num_points  = 300, xi = None, xf 
     else: 
         st.write("Once you enter and confirm your data a graph will apear here") # if data is not confirmed, display this message
 
+# defining functions that collects graph appearance settings
+def get_histogram_settings():
+    st.header("Histogram Appearance & Styling")
+    color = st.color_picker("Bar Color", "#1f77b4")
+    edgecolor = st.color_picker("Edge Color", "#000000")
+    linewidth = st.slider("Edge Line Width", 0.0, 5.0, 1.0)
+    alpha = st.slider("Transparency (alpha)", 0.0, 1.0, 0.8)
+    rwidth = st.slider("Relative Bar Width", 0.1, 1.0, 0.8)
+    histtype = st.selectbox("Histogram Type", options=["bar", "barstacked", "step", "stepfilled"])
+    orientation = st.selectbox("Orientation", options=["vertical", "horizontal"])
+    label = st.text_input("Histogram Label", "Histogram")
+
+    appearance_settings = {
+        "color": color,
+        "edgecolor": edgecolor,
+        "linewidth": linewidth,
+        "alpha": alpha,
+        "rwidth": rwidth,
+        "histtype": histtype,
+        "orientation": orientation,
+        "label": label
+    }
+
+    st.header("Axis & Layout")
+    xlabel = st.text_input("X-axis Label", "Value")
+    ylabel = st.text_input("Y-axis Label", "Frequency")
+    title = st.text_input("Plot Title", "Histogram")
+    
+    col_dist_1, col_dist2 = st.columns(2)
+    
+    with col_dist_1:
+        hist_xlim_min = st.number_input("Histogram X-axis min", value=0.0)
+        hist_ylim_min = st.number_input("Histogram Y-axis min", value=0.0)
+    with col_dist2:
+        hist_xlim_max = st.number_input("Histogram X-axis max", value=1.0)
+        hist_ylim_max = st.number_input("Histogram Y-axis max", value=1.0)
+    
+
+    axis_settings = {
+        "xlabel": xlabel,
+        "ylabel": ylabel,
+        "title": title,
+        "xlim": (hist_xlim_min, hist_xlim_max),
+        "ylim": (hist_ylim_min, hist_ylim_max),
+    }
+
+    return appearance_settings, axis_settings
+
+def get_distribution_plot_settings():
+    st.header("Distribution Plot Appearance & Styling")
+    dist_color = st.color_picker("Distribution Line Color", "#ff7f0e")
+    dist_linewidth = st.slider("Distribution Line Width", 0.0, 5.0, 2.0)
+    dist_alpha = st.slider("Distribution Transparency (alpha)", 0.0, 1.0, 1.0)
+    dist_label = st.text_input("Distribution Label", "Distribution")
+
+    dist_appearance_settings = {
+        "color": dist_color,
+        "linewidth": dist_linewidth,
+        "alpha": dist_alpha,
+        "label": dist_label,
+    }
+
+    st.header("Distribution Plot Axis & Layout")
+    dist_xlabel = st.text_input("Distribution X-axis Label", "Value")
+    dist_ylabel = st.text_input("Distribution Y-axis Label", "Density")
+    dist_title = st.text_input("Distribution Plot Title", "Distribution Plot")
+    
+    
+    col_dist_1, col_dist2 = st.columns(2)
+    
+    with col_dist_1:
+        dist_xlim_min = st.number_input("Distribution X-axis min", value=0.0)
+        dist_ylim_min = st.number_input("Distribution Y-axis min", value=0.0)
+    with col_dist2:
+        dist_xlim_max = st.number_input("Distribution X-axis max", value=1.0)
+        dist_ylim_max = st.number_input("Distribution Y-axis max", value=1.0)
+
+    dist_axis_settings = {
+        "xlabel": dist_xlabel,
+        "ylabel": dist_ylabel,
+        "title": dist_title,
+        "xlim": (dist_xlim_min, dist_xlim_max),
+        "ylim": (dist_ylim_min, dist_ylim_max),
+    }
+
+    return dist_appearance_settings, dist_axis_settings
+    
+
 # Samuel O'Blenes
 ########## Page formating/ setup ##########
 st.set_page_config(
