@@ -18,13 +18,13 @@ from scipy import stats
 
 # Defining function that accepts a pandas dataframe and a distribution, then returns the fitted dataframe
 
-def fit(df, dist_name, xi = None, xf = None, num_points =  300, x_col = "X-Axis", y_col = 'Y-Axis', fixed_loc=None, fixed_scale=None): 
+def fit(df, dist_name, xi = None, xf = None, num_points =  300, x_col = "X-Axis", y_col = 'Y-Axis'): 
     x_axis = df[x_col].dropna().values # get data from the X-Axis columns, remove None values
     y_axis = df[y_col].dropna().values # get data from the Y-Axis columns, remove None values
 
     distribution = getattr(stats, dist_name) #get the distribution from the name passed to the function
-
-    params = distribution.fit(y_axis, floc = fixed_loc, fscale = fixed_scale)  #gives the paramaters 
+        
+    params = distribution.fit(y_axis)  #gives the paramaters 
  
     if xi is None or xf is None: # determine  min and max values depending on if the user entered them in manual mode or is in auto mode
         x_min, x_max = np.min(x_axis), np.max(x_axis)
@@ -69,7 +69,7 @@ def data_entry(entry_method, unique_prefix):
 
 # defining function that plots the entered data and the fit data
 
-def plot(data_confirmed, dataframe, dist_name, num_points  = 300, xi = None, xf = None, fixed_loc = None, fixed_scale = None): 
+def plot(data_confirmed, dataframe, dist_name, num_points  = 300, xi = None, xf = None): 
     if data_confirmed and not dataframe.empty: # If data is confirmed and the dataframe is not empty, display the graph and table
         col1, col2 = st.columns([1,3])
         col1.subheader("Data")
@@ -81,7 +81,7 @@ def plot(data_confirmed, dataframe, dist_name, num_points  = 300, xi = None, xf 
             df_to_plot[col] = pd.to_numeric(df_to_plot[col], errors='coerce')
             df_to_plot = df_to_plot.dropna()
         
-        orig_df, fit_df = fit(df_to_plot, dist_name, xi = xi, xf = xf, num_points = int(num_points), fixed_loc = fixed_loc, fixed_scale = fixed_scale) 
+        orig_df, fit_df = fit(df_to_plot, dist_name, xi = xi, xf = xf, num_points = int(num_points)) 
         
         with col1:
             st.write("Entered Data")
@@ -220,7 +220,7 @@ with tab2:
     st.text("Configure graph appearance")
     
     st.divider()
-    plot(st.session_state.Dataconfirmed,st.session_state.df, st.session_state.dist_name, st.session_state.num_points, xi = xi, xf = xf, fixed_loc = fixed_loc, fixed_scale = fixed_scale) # call plot function to display graph 
+    plot(st.session_state.Dataconfirmed,st.session_state.df, st.session_state.dist_name, st.session_state.num_points, xi = xi, xf = xf) # call plot function to display graph 
 
 
 # Samuel O'Blenes NE 111 Final project
