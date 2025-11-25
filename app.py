@@ -195,7 +195,7 @@ def get_combined_plot_settings(key):
     return appearance_settings, axis_settings, dist_appearance_settings
     
 
-# Samuel O'Blenes
+# Samuel O'Blenes 
 ########## Page formating/ setup ##########
 st.set_page_config(
     page_title="NE 111 Project",
@@ -305,9 +305,17 @@ with tab2:
         value = (0,25)
     )
     
-    fixed_loc = None 
-    
-    fixed_scale = None
+    fix_loc = st.checkbox("Fix location parameter (loc)?")
+    if fix_loc:
+        fixed_loc = st.number_input("Location (loc) value", value=0.0, step=0.1, format="%.4f")
+    else:
+        fixed_loc = None
+
+    fix_scale = st.checkbox("Fix scale parameter (scale)?")
+    if fix_scale:
+        fixed_scale = st.number_input("Scale (scale) value", value=1.0, step=0.1, format="%.4f")
+    else:
+        fixed_scale = None
     
     st.divider()
         
