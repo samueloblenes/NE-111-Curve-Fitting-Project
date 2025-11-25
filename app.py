@@ -7,7 +7,6 @@
 #    and allows the user to configure a number of setting
 ################################################################################
 
-from turtle import color
 import streamlit as st
 import pandas as pd
 import numpy as np
