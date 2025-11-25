@@ -7,17 +7,17 @@
 #    and allows the user to configure a number of setting
 ################################################################################
 
+from turtle import color
 import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
 
-
+# Samuel O'Blenes
 ########## Function definitions ##########
 
 # Defining function that accepts a pandas dataframe and a distribution, then returns the fitted dataframe
-
 def fit(df, dist_name, xi = None, xf = None, num_points =  300, x_col = "X-Axis", y_col = 'Y-Axis'): 
     x_axis = df[x_col].dropna().values # get data from the X-Axis columns, remove None values
     y_axis = df[y_col].dropna().values # get data from the Y-Axis columns, remove None values
@@ -41,11 +41,11 @@ def fit(df, dist_name, xi = None, xf = None, num_points =  300, x_col = "X-Axis"
     return orig_df, fit_df
     
 # Defining function that handles data input
-
 def data_entry(entry_method, unique_prefix): 
     input_df = pd.DataFrame(columns=["X-Axis", "Y-Axis"])
     if entry_method == "Manual entry":
         input_df = st.data_editor(st.session_state.df, num_rows="dynamic", key=f"{unique_prefix}_editor") #unique prefix gives a different key to the widgets, was inititally going to sue So i could have seperat ones on each tab but ended up scrapping that idea
+
     else:
         uploaded_file = st.file_uploader("Choose a CSV file", type="csv", key=f"{unique_prefix}_uploader")
         if uploaded_file != None:
@@ -68,19 +68,15 @@ def data_entry(entry_method, unique_prefix):
     return input_df
 
 # defining function that plots the entered data and the fit data
-
 def plot(data_confirmed, dataframe, dist_name, plt_appearance_settings, hist_appearance_settings, axis_settings, num_points  = 300, xi = None, xf = None): 
     if data_confirmed and not dataframe.empty: # If data is confirmed and the dataframe is not empty, display the graph and table
         
         # prepare/clean entered date
         df_to_plot = dataframe # define the dataframe to plot
-        for col in df_to_plot.columns:
-            df_to_plot[col] = pd.to_numeric(df_to_plot[col], errors='coerce')
-            df_to_plot = df_to_plot.dropna()
+        df_to_plot["X-Axis"] = pd.to_numeric(df_to_plot["X-Axis"])
+        df_to_plot["Y-Axis"] = pd.to_numeric(df_to_plot["Y-Axis"])
         
         orig_df, fit_df = fit(df_to_plot, dist_name, xi = xi, xf = xf, num_points = int(num_points)) 
-        
-       
         
         # if no numerical data was entered, display and error
         if df_to_plot.empty:
@@ -90,7 +86,11 @@ def plot(data_confirmed, dataframe, dist_name, plt_appearance_settings, hist_app
             
             fig, ax = plt.subplots()
             ax.hist(orig_df["Y-Axis"], bins=30, density=True, **hist_appearance_settings) # create histogram of the entered data, unpack settings dictionary
-            ax.plot(fit_df["X-Axis"], fit_df["Y-Axis"], **plt_appearance_settings) # Overlay the fitted curve, unpack settings dictionary
+            
+            if hist_appearance_settings["orientation"] == "horizontal":
+                ax.plot(fit_df["Y-Axis"], fit_df["X-Axis"], **plt_appearance_settings) # Overlay the fitted curve over a hprizontal histogram, unpack settings dictionary
+            else:
+                ax.plot(fit_df["X-Axis"], fit_df["Y-Axis"], **plt_appearance_settings) # Overlay the fitted curve over a normal vertical histogram, unpack settings dictionary
 
             # Set axis labels and title from the axis_setting dictionary
             ax.set_xlabel(axis_settings["xlabel"])
@@ -107,8 +107,12 @@ def plot(data_confirmed, dataframe, dist_name, plt_appearance_settings, hist_app
             else:
                 df_trimmed = fit_df.iloc[0:0]
 
-            ax.set_xlim(0, max(df_trimmed["X-Axis"]) * 1.1)
-            ax.set_ylim(0, max(df_trimmed["Y-Axis"]) * 1.1)
+
+            # Depending on the orientation of the histogram, set the appropriate axis limits, 
+            if hist_appearance_settings["orientation"] == "horizontal":
+                ax.set_ylim(0, max(df_trimmed["X-Axis"]) * 1.1)
+            else:
+                ax.set_xlim(0, max(df_trimmed["X-Axis"]) * 1.1) 
 
             # Display in Streamlit
             st.pyplot(fig)
@@ -126,19 +130,43 @@ def plot(data_confirmed, dataframe, dist_name, plt_appearance_settings, hist_app
     else: 
         st.write("Once you enter and confirm your data a graph will apear here") # if data is not confirmed, display this message
 
-# defining functions that collects graph appearance settings
-def get_histogram_settings(key):
+# defining functions that collect graph appearance settings
+def get_combined_plot_settings(key):
     
-    st.subheader("Histogram Appearance & Styling")
-    color = st.color_picker("Bar Color", "#1f77b4", key = key)
-    edgecolor = st.color_picker("Edge Color", "#000000", key = key+"_edge")
-    linewidth = st.slider("Edge Line Width", 0.0, 5.0, 1.0, key = key+"_line")
-    alpha = st.slider("Transparency (alpha)", 0.0, 1.0, 0.8, key = key+"_alpha")
-    rwidth = st.slider("Relative Bar Width", 0.1, 1.0, 0.8, key = key+"_rwidth")
-    histtype = st.selectbox("Histogram Type", options=["bar", "barstacked", "step", "stepfilled"], key = key+"_histtype")
-    orientation = st.selectbox("Orientation", options=["vertical", "horizontal"], key = key+"_orientation")
-    label = st.text_input("Histogram Label", "Histogram", key = key+"_label")
-
+    colours = st.expander("Colour settings", expanded=False)
+    dim = st.expander("Line and bar settings", expanded=False)
+    title_axis = st.expander("Title and axis labels", expanded=False)
+    
+    
+    
+    with colours:
+        colcol1, colcol2 = st.columns(2)
+        with colcol1:
+            color = st.color_picker("Bar Color", "#1f77b4", key=key+"_hist_color")
+        with colcol2:
+            edgecolor = st.color_picker("Edge Color", "#000000", key=key+"_hist_edge")
+            
+        dist_color = st.color_picker("Distribution Line Color", "#ff7f0e", key=key+"_dist_color")
+        
+        alpha = st.slider("Histogram Transparency", 0.0, 1.0, 0.8, key=key+"_hist_alpha")
+        dist_alpha = st.slider("Distribution Transparency", 0.0, 1.0, 1.0, key=key+"_dist_alpha")
+        
+    with dim:
+        histtype = st.selectbox("Histogram Type", options=["bar", "barstacked", "step", "stepfilled"], key=key+"_hist_histtype")
+        plotstyle = st.selectbox("Plot Style", options=["solid", "dashed", "dashdot", "dotted"], key=key+"_plot_style")
+        orientation = st.selectbox("Orientation", options=["vertical", "horizontal"], key=key+"_hist_orientation")
+        linewidth = st.slider("Edge Line Width", 0.0, 5.0, 1.0, key=key+"_hist_line")
+        rwidth = st.slider("Relative Bar Width", 0.1, 1.0, 0.8, key=key+"_hist_rwidth")
+        dist_linewidth = st.slider("Distribution Line Width", 0.0, 5.0, 2.0, key=key+"_dist_linewidth")
+        
+    with title_axis:
+        title = st.text_input("Plot Title", "Title", key=key+"_title")
+        xlabel = st.text_input("X-axis Label", "x-label", key=key+"_xlabel")
+        ylabel = st.text_input("Y-axis Label", "y-label", key=key+"_ylabel")
+        label = st.text_input("Histogram Label", "Histogram", key=key+"_hist_label")
+        dist_label = st.text_input("Distribution Label", "Distribution", key=key+"_dist_label")
+    
+        
     appearance_settings = {
         "color": color,
         "edgecolor": edgecolor,
@@ -149,36 +177,22 @@ def get_histogram_settings(key):
         "orientation": orientation,
         "label": label
     }
-
-    st.subheader("Axis & Layout")
-    xlabel = st.text_input("X-axis Label", "Value", key = key+"_xlabel")
-    ylabel = st.text_input("Y-axis Label", "Frequency", key = key+"_ylabel")
-    title = st.text_input("Plot Title", "Histogram", key = key+"_title")
-
+    
     axis_settings = {
         "xlabel": xlabel,
         "ylabel": ylabel,
         "title": title,
-
     }
-
-    return appearance_settings, axis_settings
-
-def get_distribution_plot_settings(key):
-    st.subheader("Distribution Plot Appearance & Styling")
-    dist_color = st.color_picker("Distribution Line Color", "#ff7f0e", key=key)
-    dist_linewidth = st.slider("Distribution Line Width", 0.0, 5.0, 2.0, key=key+"_linewidth")
-    dist_alpha = st.slider("Distribution Transparency (alpha)", 0.0, 1.0, 1.0, key=key+"_alpha")
-    dist_label = st.text_input("Distribution Label", "Distribution", key=key+"_label")
-
+    
     dist_appearance_settings = {
         "color": dist_color,
         "linewidth": dist_linewidth,
         "alpha": dist_alpha,
         "label": dist_label,
+        "linestyle": plotstyle
     }
 
-    return dist_appearance_settings
+    return appearance_settings, axis_settings, dist_appearance_settings
     
 
 # Samuel O'Blenes
@@ -216,11 +230,22 @@ with col1:
     st.write("Click confirm to update the graph")
     confirm_clicked = st.button("Confirm")
     if confirm_clicked:
-        # Remove rows where ALL cells are None, to check if there are actually any numerical values, not just a bunch of aded empty rows
-        cleaned_df = input_df.dropna() #remove None values from dataframe
-        if not cleaned_df.empty and cleaned_df.notna().any().any(): # Check if at least one cell is not empty
+        
+        temp_df = input_df.copy()
+        if temp_df["X-Axis"].isna().all():# If all X-Axis missing, auto-generate
+            temp_df["X-Axis"] = range(1, len(temp_df) + 1)
+            st.warning("No X-Axis data entered. X values have been assigned as sequential integers starting from 1.")
+            
+        cleaned_df = temp_df.dropna(subset=["Y-Axis"]) #remove None values from dataframe
+        
+        if not temp_df["X-Axis"].astype(str).str.isnumeric().any() or not temp_df["Y-Axis"].astype(str).str.isnumeric().any() and temp_df["X-Axis"].isnull().any(): # Check for non-numeric value
+            st.error("Non-numeric values detected in the data. Please enter only numeric values.")
+        elif not cleaned_df.empty and cleaned_df.notna().any().any(): # Check if at least one cell is not empty
+            if cleaned_df.shape[0] < temp_df.shape[0]:
+                st.warning("Some rows with missing Y-Axis values have been removed.") # warn user if any rows were removed due to missing Y-Axis values
             st.session_state.df = cleaned_df
             st.session_state.Dataconfirmed = True
+            st.info("Data confirmed successfully!")
         else:
            st.error("Please enter some data to confirm") #if not data has been enetred (the data frame only contains None values or no values) display this error message
             
@@ -264,15 +289,7 @@ tab1, tab2= st.tabs(["Auto Fit", "Manual Fit"])
 with tab1:    
     tab1_col1, tab1_col2 = st.columns([1,3])
     with tab1_col1:
-
-        hist_expander = st.expander("Histogram Appearance & Styling")
-        dist_expander = st.expander("Distribution Plot Appearance & Styling")
-
-        with hist_expander:
-            hist_appearance_settings, axis_settings = get_histogram_settings(key="auto_hist")
-
-        with dist_expander:
-            dist_appearance_settings = get_distribution_plot_settings(key="auto_dist")
+        hist_appearance_settings, axis_settings, dist_appearance_settings = get_combined_plot_settings(key="auto")
    
     with tab1_col2:
         plot(st.session_state.Dataconfirmed, st.session_state.df, st.session_state.dist_name, dist_appearance_settings, hist_appearance_settings, axis_settings, st.session_state.num_points) # call plot function to display graph
@@ -296,15 +313,7 @@ with tab2:
         
     tab1_col1, tab1_col2 = st.columns([1,3])
     with tab1_col1:
-        hist_expander = st.expander("Histogram Appearance & Styling")
-        dist_expander = st.expander("Distribution Plot Appearance & Styling")
-        
-
-        with hist_expander:
-            hist_appearance_settings, hist_axis_settings = get_histogram_settings(key="man_hist")
-
-        with dist_expander:
-            dist_appearance_settings = get_distribution_plot_settings(key="man_dist")
+        hist_appearance_settings, hist_axis_settings, dist_appearance_settings = get_combined_plot_settings(key="man")
 
     with tab1_col2:
         plot(st.session_state.Dataconfirmed, st.session_state.df, st.session_state.dist_name, dist_appearance_settings, hist_appearance_settings, axis_settings, st.session_state.num_points,xi, xf) # call plot function to display graph 
