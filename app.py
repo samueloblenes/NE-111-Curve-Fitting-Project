@@ -320,7 +320,7 @@ with st.sidebar:
 - Choose **Manual entry** or **Upload CSV file**.
 - For CSVs:
     - Upload a file with **one column** of numeric values.
-    - The column will be treated as **Values** (the data sample).
+    - The column will be treated as the data sample.
 - For manual entry:
     - Edit the **Values** column in the table.
 - Click **Confirm** to clean and lock in the data for plotting.
@@ -338,7 +338,8 @@ with st.sidebar:
 - In **Manual Fit**, you can:
     - Adjust the **curve resolution** (number of points).
     - Set the **x-range** for the PDF.
-    - And more
+    - Fix and manually set scale, location, and shape paramaters
+        - Note, if you fix all the paramaters, there is nothing left to optomize and scipy.fit will not be used, the distribution will be fit using only your entered paramaters.
     
 4. **Customize the plot**
 - Use the 3 settings expanders to view and change:
@@ -350,9 +351,10 @@ with st.sidebar:
 - Use the **Clear** button to reset all entered data.
    
 **Notes:**
-- Rows with **missing values** are automatically removed
+- Rows with **missing values** are automatically removed.
 - Only numeric **Values** are allowed; non-numeric entries are removed.
 - The plot and fit only update after you click **Confirm**.
+- After entering data, you must press the clear button before editing or entering new date and then reconfirm for it to be reflected in the graph. 
     """)
 
 
