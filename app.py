@@ -352,7 +352,7 @@ with st.sidebar:
    
 **Notes:**
 - Rows with **missing values** are automatically removed.
-- Only numeric **Values** are allowed; non-numeric entries are removed.
+- Only numeric **Values** are allowed, non-numeric entries are removed.
 - The plot and fit only update after you click **Confirm**.
 - After entering data, you must press the clear button before editing or entering new date and then reconfirm for it to be reflected in the graph. 
     """)
