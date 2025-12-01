@@ -1,10 +1,6 @@
 ################################################################################
 # Samuel O'Blenes NE 111 Final project
-#
-# Description:
-#    This program is a curve fitting web app made using the streamlit library.
-#    It accepts data either through manual entry or by uploading a .CSV file 
-#    and allows the user to configure a number of settings
+# Dec 2 2025
 ################################################################################
 
 import streamlit as st
