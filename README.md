@@ -29,7 +29,7 @@ This is a streamlit web application for curve fitting that lets users see how di
   - custom titles and axis labels
 
  ## Dependencies
-- 'matplotlib'
-- 'numpy'
-- 'scipy'
-- 'Streamlit'
+- matplotlib
+- numpy
+- scipy
+- Streamlit
